@@ -12,32 +12,44 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class WalletServiceImpl implements WalletService {
 
     private final WalletJpa walletJpa;
     private final WalletMapper mapper;
+
+    @Override
+    public void add(WalletDto dto) {
+        walletJpa.save(mapper.toEntity(dto));
+    }
+
     private final WalletOperationContext context;
 
     @Override
-    @Transactional
     public boolean executeWalletOperation(WalletRequestDto dto) {
+
         return context.execute(dto);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public WalletDto getWalletByUUID(UUID uuid) {
         Optional<Wallet> wallet = walletJpa.findById(uuid);
 
-        if (wallet.isPresent()){
+        if (wallet.isPresent()) {
             return mapper.toDto(wallet.get());
         } else {
             throw new WalletIsMissingException();
         }
+    }
+
+    @Override
+    public List<WalletDto> getAllWallet() {
+        return walletJpa.findAll().stream().map(mapper::toDto).toList();
     }
 }

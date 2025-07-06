@@ -137,6 +137,7 @@ class WalletJpaTest {
         });
 
         t1.start();
+        Thread.sleep(100);
         t2.start();
 
         t1.join();

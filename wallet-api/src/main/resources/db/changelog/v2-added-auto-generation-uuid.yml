@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: v2-add-default-uuid-to-wallet
+      author: Pavel
+      changes:
+        - addDefaultValue:
+            columnName: wallet_id
+            tableName: wallet
+            defaultValueComputed: gen_random_uuid()
