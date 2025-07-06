@@ -25,13 +25,6 @@ public class WalletServiceImpl implements WalletService {
     @Override
     @Transactional
     public boolean executeWalletOperation(WalletRequestDto dto) {
-
-        if (dto.getWalletId() == null) throw new RuntimeException();
-
-        if (dto.getAmount() == null || dto.getAmount().signum() <= 0) {
-            throw new RuntimeException();
-        }
-
         return context.execute(dto);
     }
 
