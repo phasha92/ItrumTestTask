@@ -17,13 +17,8 @@ public class WalletBeansConfig {
     @Bean
     Map<OperationType, WalletOperation> walletOperationStrategyContext(@Qualifier("deposit") WalletOperationDeposit deposit,  @Qualifier("withdraw") WalletOperationWithdraw withdraw ){
         Map<OperationType, WalletOperation> contextStrategies = new HashMap<>();
-
-        contextStrategies.put(null, requestDto -> {
-            throw new RuntimeException();
-        });
         contextStrategies.put(OperationType.DEPOSIT, deposit);
         contextStrategies.put(OperationType.WITHDRAW, withdraw);
-
         return contextStrategies;
     }
 }
