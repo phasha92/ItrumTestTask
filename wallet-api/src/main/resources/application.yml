@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: spring_app
+  datasource:
+    url: jdbc:postgresql://localhost:5431/mydatabase
+    username: admin
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:db/changelog/master.yml
+    enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+server:
+  port: 8082

@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1-init-wallet
+      author: Pavel
+      changes:
+        - createTable:
+            tableName: wallet
+            columns:
+              - column:
+                  name: walletId
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: balance
+                  type: DECIMAL(19,2)
+                  defaultValueNumeric: 0.00
+                  constraints:
+                    nullable: false

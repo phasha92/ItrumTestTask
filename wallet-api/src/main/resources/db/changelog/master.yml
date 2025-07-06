@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: v1-init-wallet.yml
+      relativeToChangelogFile: true
