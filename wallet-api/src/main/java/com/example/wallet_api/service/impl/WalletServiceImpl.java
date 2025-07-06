@@ -3,6 +3,7 @@ package com.example.wallet_api.service.impl;
 import com.example.wallet_api.dto.request.WalletRequestDto;
 import com.example.wallet_api.dto.response.WalletDto;
 import com.example.wallet_api.entity.Wallet;
+import com.example.wallet_api.exception.WalletIsMissingException;
 import com.example.wallet_api.mapper.WalletMapper;
 import com.example.wallet_api.repository.WalletJpa;
 import com.example.wallet_api.service.WalletService;
@@ -36,7 +37,7 @@ public class WalletServiceImpl implements WalletService {
         if (wallet.isPresent()){
             return mapper.toDto(wallet.get());
         } else {
-            throw new RuntimeException();
+            throw new WalletIsMissingException();
         }
     }
 }

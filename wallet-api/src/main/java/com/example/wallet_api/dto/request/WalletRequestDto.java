@@ -11,13 +11,13 @@ import java.util.UUID;
 @Getter
 public class WalletRequestDto {
 
-    @NotNull
+    @NotNull(message = "Identifier cannot be null.")
     private UUID walletId;
 
-    @NotNull
+    @NotNull(message = "Operation type cannot be null.")
     private OperationType operationType;
 
-    @Positive
-    @NotNull
+    @Positive(message = "Balance cannot be negative.")
+    @NotNull(message = "Amount cannot be null.")
     private BigDecimal amount;
 }

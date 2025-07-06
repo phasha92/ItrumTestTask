@@ -2,6 +2,7 @@ package com.example.wallet_api.wallet_strategy.impl;
 
 import com.example.wallet_api.dto.request.WalletRequestDto;
 import com.example.wallet_api.entity.Wallet;
+import com.example.wallet_api.exception.NotEnoughFundsException;
 import com.example.wallet_api.repository.WalletJpa;
 import com.example.wallet_api.wallet_strategy.WalletOperation;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class WalletOperationWithdraw implements WalletOperation {
             Wallet wallet = walletOpt.get();
 
             if (wallet.getBalance().compareTo(requestDto.getAmount()) < 0) {
-                throw new RuntimeException();
+                throw new NotEnoughFundsException();
             }
 
             wallet.setBalance(wallet.getBalance().subtract(requestDto.getAmount()));
