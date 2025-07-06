@@ -1,6 +1,5 @@
 package com.example.wallet_api.repository;
 
-
 import com.example.wallet_api.entity.Wallet;
 import org.springframework.data.jpa.repository.JpaRepository;
 

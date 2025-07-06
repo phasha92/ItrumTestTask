@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service("withdraw")
 @RequiredArgsConstructor
@@ -18,14 +17,6 @@ public class WalletOperationWithdraw implements WalletOperation {
 
     @Override
     public boolean execute(WalletRequestDto requestDto) {
-        UUID uuid = requestDto.getWalletId();
-
-        if (uuid == null) throw new RuntimeException();
-
-        if (requestDto.getAmount() == null || requestDto.getAmount().signum() <= 0) {
-            throw new RuntimeException();
-        }
-
         Optional<Wallet> walletOpt = walletJpa.findById(requestDto.getWalletId());
 
         if (walletOpt.isPresent()) {

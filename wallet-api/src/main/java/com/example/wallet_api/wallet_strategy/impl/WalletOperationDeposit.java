@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service("deposit")
 @RequiredArgsConstructor
@@ -18,15 +17,7 @@ public class WalletOperationDeposit implements WalletOperation {
 
     @Override
     public boolean execute(WalletRequestDto requestDto) {
-        UUID uuid = requestDto.getWalletId();
-
-        if (uuid == null) throw new RuntimeException();
-
-        if (requestDto.getAmount() == null || requestDto.getAmount().signum() <= 0) {
-            throw new RuntimeException();
-        }
-
-        Optional<Wallet> walletOptional = walletJpa.findById(uuid);
+        Optional<Wallet> walletOptional = walletJpa.findById(requestDto.getWalletId());
 
         if (walletOptional.isPresent()) {
             Wallet wallet = walletOptional.get();
