@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: wallet
             columns:
               - column:
-                  name: walletId
+                  name: wallet_id
                   type: UUID
                   constraints:
                     primaryKey: true
