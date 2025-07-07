@@ -1,5 +1,6 @@
 package com.example.wallet_api.controller;
 
+import com.example.wallet_api.dto.request.CreateWalletDto;
 import com.example.wallet_api.dto.request.WalletRequestDto;
 import com.example.wallet_api.dto.response.WalletDto;
 import com.example.wallet_api.service.WalletService;
@@ -24,18 +25,18 @@ public class WalletController {
         return ResponseEntity.ok(walletService.getWalletByUUID(uuid));
     }
 
-    @GetMapping({"wallets","wallets/"})
+    @GetMapping({"wallets", "wallets/"})
     public ResponseEntity<List<WalletDto>> getAllWallets() {
         return ResponseEntity.ok(walletService.getAllWallet());
     }
 
-    @PostMapping({"wallet/add-wallet","wallet/add-wallet/"})
-    public ResponseEntity<Void> createWallet(@RequestBody WalletDto dto) {
+    @PostMapping({"wallet/add-wallet", "wallet/add-wallet/"})
+    public ResponseEntity<Void> createWallet(@RequestBody @Valid CreateWalletDto dto) {
         walletService.add(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping({"wallet","wallet/"})
+    @PostMapping({"wallet", "wallet/"})
     public ResponseEntity<Boolean> operationWithWalletBalance(@RequestBody @Valid WalletRequestDto dto) {
         return ResponseEntity.ok(walletService.executeWalletOperation(dto));
     }

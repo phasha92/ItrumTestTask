@@ -3,12 +3,14 @@ package com.example.wallet_api.dto.request;
 import com.example.wallet_api.enums.OperationType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
+@Builder
 public class WalletRequestDto {
 
     @NotNull(message = "Identifier cannot be null.")

@@ -1,5 +1,6 @@
 package com.example.wallet_api.service.impl;
 
+import com.example.wallet_api.dto.request.CreateWalletDto;
 import com.example.wallet_api.dto.request.WalletRequestDto;
 import com.example.wallet_api.dto.response.WalletDto;
 import com.example.wallet_api.entity.Wallet;
@@ -23,13 +24,12 @@ public class WalletServiceImpl implements WalletService {
 
     private final WalletJpa walletJpa;
     private final WalletMapper mapper;
+    private final WalletOperationContext context;
 
     @Override
-    public void add(WalletDto dto) {
+    public void add(CreateWalletDto dto) {
         walletJpa.save(mapper.toEntity(dto));
     }
-
-    private final WalletOperationContext context;
 
     @Override
     public boolean executeWalletOperation(WalletRequestDto dto) {
