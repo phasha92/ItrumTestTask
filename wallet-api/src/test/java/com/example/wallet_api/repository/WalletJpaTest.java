@@ -5,7 +5,6 @@ import com.example.wallet_api.entity.Wallet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.hibernate.PessimisticLockException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @SpringBootTest
 class WalletJpaTest {
@@ -109,13 +109,14 @@ class WalletJpaTest {
     void testPessimisticWriteLock() throws InterruptedException {
 
         UUID uuid = wallets.get(0).getWalletId();
+        AtomicBoolean result = new AtomicBoolean(false);
 
         Thread t1 = new Thread(() -> {
 
             assertTrue(transactionTemplate.execute(status -> {
                 walletJpa.findById(uuid);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     return false;
                 }
@@ -125,15 +126,11 @@ class WalletJpaTest {
 
         Thread t2 = new Thread(() -> {
 
-            assertTrue(transactionTemplate.execute(status -> {
-                try {
-                    walletJpa.findById(uuid);
-                } catch (PessimisticLockException ex) {
-                    return true;
-                }
-                return false;
-            }).booleanValue());
+            long start = System.currentTimeMillis();
+            transactionTemplate.execute(status -> walletJpa.findById(uuid));
+            long end = System.currentTimeMillis() - start;
 
+            result.set(end >= 2000);
         });
 
         t1.start();
@@ -143,6 +140,7 @@ class WalletJpaTest {
         t1.join();
         t2.join();
 
+        assertTrue(result.get());
     }
 
 }

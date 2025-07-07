@@ -24,18 +24,18 @@ public class WalletController {
         return ResponseEntity.ok(walletService.getWalletByUUID(uuid));
     }
 
-    @GetMapping("wallet")
+    @GetMapping({"wallets","wallets/"})
     public ResponseEntity<List<WalletDto>> getAllWallets() {
         return ResponseEntity.ok(walletService.getAllWallet());
     }
 
-    @PostMapping("wallet/add-wallet")
+    @PostMapping({"wallet/add-wallet","wallet/add-wallet/"})
     public ResponseEntity<Void> createWallet(@RequestBody WalletDto dto) {
         walletService.add(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("wallet/")
+    @PostMapping({"wallet","wallet/"})
     public ResponseEntity<Boolean> operationWithWalletBalance(@RequestBody @Valid WalletRequestDto dto) {
         return ResponseEntity.ok(walletService.executeWalletOperation(dto));
     }
